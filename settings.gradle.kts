@@ -23,3 +23,6 @@ rootProject.name = "WeatherApp"
 include(":app")
 include(":feature")
 include(":feature:weather")
+include(":common")
+include(":common:resource")
+include(":common:network")
