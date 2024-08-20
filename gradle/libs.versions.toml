@@ -18,7 +18,6 @@ loggingInterceptor = "4.12.0"
 converterGson = "2.9.0"
 serialization = "1.6.3"
 material3Android = "1.2.1"
-navigationCompose = "2.8.0-beta07"
 compose-plugin = "1.7.0-alpha03"
 
 [libraries]
