@@ -60,4 +60,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     kapt(libs.hilt.android.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+
+    implementation(project(":common:resource"))
+    implementation(project(":common:network"))
 }

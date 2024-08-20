@@ -6,8 +6,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,30 +24,25 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(
-    ) =
-        OkHttpClient.Builder()
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .addInterceptor(
-                HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor(ApiHeaderInterceptor())
-            .build()
+    ) = OkHttpClient.Builder().readTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).addInterceptor(
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        ).addInterceptor{apiKeyAsQuery(it)}.build()
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .client(okHttpClient)
-        .build()
+    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit =
+        Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(baseUrl)
+            .client(okHttpClient).build()
 
-    class ApiHeaderInterceptor: Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val requestBuilder: Request.Builder = chain.request().newBuilder()
-            requestBuilder.header("Accept-Language", " pl-PL")
-            return chain.proceed(requestBuilder.build())
-        }
-    }
+
+
+    private fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
+        chain.request().newBuilder().url(
+                chain.request().url.newBuilder()
+                    .addQueryParameter("apikey", "KpV3WbOj72MXQ5h3j4oYY2Lkxuf4yUfV")
+                    .addQueryParameter("language", "pl-PL")
+                    .build()
+            ).build()
+    )
 }
