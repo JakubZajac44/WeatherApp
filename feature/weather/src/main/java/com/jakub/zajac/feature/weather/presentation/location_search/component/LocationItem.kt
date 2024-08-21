@@ -14,11 +14,11 @@ import com.jakub.zajac.feature.weather.domain.model.LocationModel
 fun LocationItem(
     modifier: Modifier = Modifier,
     model: LocationModel,
-    onItemClick: (key: String) -> Unit,
+    onItemClick: (model: LocationModel) -> Unit,
 ) {
     Box(modifier = modifier
         .fillMaxWidth()
-        .clickable { onItemClick.invoke(model.key) }) {
+        .clickable { onItemClick.invoke(model) }) {
         Text(
             text = model.name, modifier = Modifier
                 .fillMaxWidth()

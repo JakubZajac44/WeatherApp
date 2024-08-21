@@ -19,10 +19,10 @@ fun LocationEntity.toLocationModel() = LocationModel(
     countryModel = CountryModel(this.name)
 )
 
-fun LocationModel.toLocationEntity() = LocationEntity(
+fun LocationModel.toLocationEntity(usageNumber: Int) = LocationEntity(
     key = this.key,
     type = this.type,
     name = this.name,
     country = this.countryModel.name,
-    usageNumber = 0
+    usageNumber = usageNumber
 )

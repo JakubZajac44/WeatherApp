@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +28,7 @@ import com.jakub.zajac.feature.weather.presentation.location_search.component.Lo
 
 @Composable
 fun LocationSearchScreen(
+    modifier: Modifier = Modifier,
     state: LocationSearchState,
     event: (LocationSearchEvent) -> Unit,
     navigationEvent: (LocationSearchNavigationEvent) -> Unit
@@ -36,7 +36,6 @@ fun LocationSearchScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
             .background(Color.Red)
     ) {
 
@@ -44,9 +43,7 @@ fun LocationSearchScreen(
 
             OutlinedTextField(
                 value = state.searchQuery,
-                modifier = Modifier
-                    .fillMaxWidth()
-                ,
+                modifier = Modifier.fillMaxWidth(),
                 onValueChange = {
                     event.invoke(LocationSearchEvent.SearchQueryTyped(it))
                 },
@@ -91,11 +88,7 @@ fun LocationSearchScreen(
                 ),
             )
 
-            if (state.isSearching) {
-                Box(modifier = Modifier.fillMaxSize()) {
-
-                }
-            } else {
+            if (state.locationList.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,15 +97,45 @@ fun LocationSearchScreen(
                     items(state.locationList) { location ->
                         LocationItem(
                             model = location,
-                        ) { key ->
+                        ) { model ->
+                            event.invoke(
+                                LocationSearchEvent.LocationSelected(model)
+                            )
+
                             navigationEvent.invoke(
                                 LocationSearchNavigationEvent.LocationSelected(
-                                    key
+                                    model.key
                                 )
                             )
                         }
                     }
                 }
+            }
+            else if (state.cachedLocationList.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
+                    items(state.cachedLocationList) { location ->
+                        LocationItem(
+                            model = location,
+                        ) { model ->
+
+                            event.invoke(
+                                LocationSearchEvent.LocationSelected(model)
+                            )
+
+                            navigationEvent.invoke(
+                                LocationSearchNavigationEvent.LocationSelected(
+                                    model.key
+                                )
+                            )
+                        }
+                    }
+                }
+            } else {
+                Text(text = "Zacznij wpisywać aby pobrać listę miast")
             }
         }
     }
