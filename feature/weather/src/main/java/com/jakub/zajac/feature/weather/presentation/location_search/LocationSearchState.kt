@@ -5,6 +5,7 @@ import com.jakub.zajac.feature.weather.domain.model.LocationModel
 
 data class LocationSearchState(
     val locationList: List<LocationModel> = listOf(),
+    val cachedLocationList: List<LocationModel> = listOf(),
     var searchQuery: TextFieldValue = TextFieldValue(""),
     val isLoading: Boolean = false,
     val isSearching: Boolean = false,

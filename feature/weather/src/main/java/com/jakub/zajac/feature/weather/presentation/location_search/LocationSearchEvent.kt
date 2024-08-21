@@ -1,10 +1,12 @@
 package com.jakub.zajac.feature.weather.presentation.location_search
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.jakub.zajac.feature.weather.domain.model.LocationModel
 
 sealed class LocationSearchEvent {
     data class SearchQueryTyped(val locationQuery: TextFieldValue) : LocationSearchEvent()
     data object ClearSearchTyped : LocationSearchEvent()
+    data class LocationSelected(val locationModel: LocationModel): LocationSearchEvent()
 }
 
 sealed class LocationSearchNavigationEvent {
