@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -50,5 +51,8 @@ dependencies {
     // Retrofit
     implementation(libs.logging.interceptor)
     implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.kotlinx.serialization.json)
+
 }
