@@ -1,6 +1,5 @@
 package com.jakub.zajac.feature.weather.presentation.location_search
 
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jakub.zajac.common.resource.Resource
@@ -8,10 +7,9 @@ import com.jakub.zajac.feature.weather.domain.use_case.CacheSelectedLocationUseC
 import com.jakub.zajac.feature.weather.domain.use_case.GetCachedLocationUseCase
 import com.jakub.zajac.feature.weather.domain.use_case.GetLocationUseCase
 import com.jakub.zajac.feature.weather.domain.use_case.ValidateQueryUseCase
+import com.jakub.zajac.feature.weather.domain.use_case.ValidationQueryStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,26 +42,16 @@ class LocationSearchViewModel @Inject constructor(
 
         when (event) {
             is LocationSearchEvent.SearchQueryTyped -> {
-                if(!validateQueryUseCase.invoke(state.value.searchQuery.text, event.locationQuery.text)) return
-
-
-                job?.cancel()
-
-                job = viewModelScope.launch(Dispatchers.IO) {
-                    _state.update { data ->
-                        data.copy(
-                            searchQuery = event.locationQuery, isSearching = true
-                        )
-                    }
-                    delay(500L)
-                    getLocationByQueryName(event.locationQuery.text)
-                }
+                handleNewSearchQuery(event.locationQuery)
             }
 
             LocationSearchEvent.ClearSearchTyped -> {
                 _state.update { data ->
                     data.copy(
-                        searchQuery = TextFieldValue(""), locationList = listOf(), isLoading = false
+                        locationList = listOf(),
+                        isLoading = false,
+                        inputErrorMessage = "",
+                        locationNotFound = false
                     )
                 }
             }
@@ -90,7 +78,6 @@ class LocationSearchViewModel @Inject constructor(
                                 cachedLocationList = result.data,
                                 isLoading = false,
                                 isSearching = false,
-                                errorMessage = ""
                             )
                         }
                     }
@@ -99,8 +86,54 @@ class LocationSearchViewModel @Inject constructor(
         }
     }
 
+    private fun handleNewSearchQuery(locationQuery: String) {
+        val validateQueryMessage = validateSearchQueryMessageError(locationQuery)
+        val shouldLocationSearch = validateQueryMessage.isEmpty()
+
+        _state.update { data ->
+            data.copy(
+                inputErrorMessage = validateQueryMessage
+            )
+        }
+
+        job?.cancel()
+        if (locationQuery.isEmpty()) {
+            _state.update { data ->
+                data.copy(
+                    locationList = listOf(), locationNotFound = false
+                )
+            }
+
+        } else if (shouldLocationSearch) {
+            getLocationByQueryName(locationQuery)
+        }
+
+    }
+
+    private fun validateSearchQueryMessageError(newQuery: String): String {
+        return when (validateQueryUseCase.invoke(newQuery)) {
+            ValidationQueryStatus.QueryCorrect -> {
+                ""
+            }
+
+            ValidationQueryStatus.QueryContainNumber -> {
+                "Nazwa miejscowości nie może zawierać liczb"
+            }
+
+            ValidationQueryStatus.QueryContainSpecialChar -> {
+
+                "Nazwa miejscowości nie może zawierać zanków specjalnych"
+            }
+
+            ValidationQueryStatus.QueryDefault -> {
+                "Błędna nazwa miejscowości"
+            }
+        }
+    }
+
     private fun getLocationByQueryName(queryName: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        job = viewModelScope.launch(Dispatchers.IO) {
+            delay(300L)
             getLocationUseCase(queryName).collect { result ->
                 when (result) {
                     is Resource.Error -> {
@@ -110,9 +143,9 @@ class LocationSearchViewModel @Inject constructor(
                         _state.update {
                             it.copy(
                                 locationList = result.data,
+                                locationNotFound = result.data.isEmpty(),
                                 isLoading = false,
                                 isSearching = false,
-                                errorMessage = ""
                             )
                         }
                     }
