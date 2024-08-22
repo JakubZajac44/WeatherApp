@@ -18,6 +18,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -33,6 +37,8 @@ fun LocationSearchScreen(
     event: (LocationSearchEvent) -> Unit,
     navigationEvent: (LocationSearchNavigationEvent) -> Unit
 ) {
+    var query by rememberSaveable  { mutableStateOf("") }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,22 +48,24 @@ fun LocationSearchScreen(
         Column {
 
             OutlinedTextField(
-                value = state.searchQuery,
+                value = query,
                 modifier = Modifier.fillMaxWidth(),
-                onValueChange = {
-                    event.invoke(LocationSearchEvent.SearchQueryTyped(it))
+                onValueChange = { newQuery ->
+                    query = newQuery
+                    event.invoke(LocationSearchEvent.SearchQueryTyped(newQuery))
                 },
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
                 supportingText = {
-                    if (state.errorMessage.isNotBlank()) {
-                        Text(state.errorMessage)
+                    if (state.inputErrorMessage.isNotBlank()) {
+                        Text(state.inputErrorMessage)
                     }
 
                 },
                 isError = true,
                 trailingIcon = {
                     Box(Modifier.clickable {
+                        query = ""
                         event.invoke(LocationSearchEvent.ClearSearchTyped)
                     }) {
                         Icon(
@@ -111,6 +119,9 @@ fun LocationSearchScreen(
                     }
                 }
             }
+            else if(state.locationNotFound){
+                Text("Brak dopasowania ")
+            }
             else if (state.cachedLocationList.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
@@ -134,7 +145,8 @@ fun LocationSearchScreen(
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 Text(text = "Zacznij wpisywać aby pobrać listę miast")
             }
         }
