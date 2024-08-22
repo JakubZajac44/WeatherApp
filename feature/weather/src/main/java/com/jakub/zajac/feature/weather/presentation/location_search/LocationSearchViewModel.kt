@@ -133,7 +133,7 @@ class LocationSearchViewModel @Inject constructor(
 
     private fun getLocationByQueryName(queryName: String) {
         job = viewModelScope.launch(Dispatchers.IO) {
-            delay(300L)
+            delay(SEARCHING_DELAY)
             getLocationUseCase(queryName).collect { result ->
                 when (result) {
                     is Resource.Error -> {
@@ -160,5 +160,9 @@ class LocationSearchViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    companion object{
+        const val SEARCHING_DELAY = 300L
     }
 }
