@@ -71,6 +71,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.androidx.ui.text.google.fonts)
+
     // Hilt
     implementation(libs.hilt)
     kapt(libs.hilt.android.compiler)
