@@ -34,8 +34,8 @@ suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): ApiResult<T> {
 
 private fun mapNetworkThrowable(throwable: Throwable): ApiException {
     return when (throwable) {
-        is java.net.UnknownHostException -> ApiException.ServerNotResponding
-        is java.net.SocketTimeoutException -> ApiException.ServerNotResponding
-        else -> ApiException.NoInternet
+        is java.net.UnknownHostException -> ApiException.NoInternet
+        is java.net.SocketTimeoutException -> ApiException.NoInternet
+        else -> ApiException.ServerNotResponding
     }
 }
