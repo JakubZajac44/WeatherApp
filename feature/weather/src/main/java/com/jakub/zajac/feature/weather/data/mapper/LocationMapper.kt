@@ -1,7 +1,7 @@
 package com.jakub.zajac.feature.weather.data.mapper
 
 import com.jakub.zajac.common.storage.model.LocationEntity
-import com.jakub.zajac.feature.weather.data.remote.model.LocationDto
+import com.jakub.zajac.common.network.model.LocationDto
 import com.jakub.zajac.feature.weather.domain.model.CountryModel
 import com.jakub.zajac.feature.weather.domain.model.LocationModel
 

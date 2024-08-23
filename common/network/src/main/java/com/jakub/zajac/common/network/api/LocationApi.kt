@@ -1,6 +1,6 @@
-package com.jakub.zajac.feature.weather.data.remote.api
+package com.jakub.zajac.common.network.api
 
-import com.jakub.zajac.feature.weather.data.remote.model.LocationDto
+import com.jakub.zajac.common.network.model.LocationDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

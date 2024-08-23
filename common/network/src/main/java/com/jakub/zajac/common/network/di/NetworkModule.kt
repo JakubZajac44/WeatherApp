@@ -1,4 +1,4 @@
-package com.jakub.zajac.common.network
+package com.jakub.zajac.common.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module

@@ -1,14 +1,14 @@
 package com.jakub.zajac.feature.weather.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import androidx.lifecycle.SavedStateHandle
 import com.jakub.zajac.feature.weather.presentation.location_search.LocationSearchNavigationEvent
 import com.jakub.zajac.feature.weather.presentation.location_search.locationSearchNavigation
-import com.jakub.zajac.feature.weather.presentation.weather_info.LOCATION_KEY
-import com.jakub.zajac.feature.weather.presentation.weather_info.navigateToWeatherInfoScreen
-import com.jakub.zajac.feature.weather.presentation.weather_info.weatherInfoNavigation
+import com.jakub.zajac.feature.weather.presentation.weather_details.LOCATION_KEY
+import com.jakub.zajac.feature.weather.presentation.weather_details.navigateToWeatherDetailsScreen
+import com.jakub.zajac.feature.weather.presentation.weather_details.weatherDetailsNavigation
 
 const val WEATHER_GRAPH_ROUTE = "weather-graph"
 
@@ -23,20 +23,17 @@ fun NavGraphBuilder.weatherGraph(
 ) {
 
     navigation(
-        route = WEATHER_GRAPH_ROUTE,
-        startDestination =  Route.LocationSearchRout.route
-    ){
-        locationSearchNavigation( navigationEvent = { navigationEvent ->
-            when(navigationEvent){
+        route = WEATHER_GRAPH_ROUTE, startDestination = Route.LocationSearchRout.route
+    ) {
+        locationSearchNavigation(navigationEvent = { navigationEvent ->
+            when (navigationEvent) {
                 is LocationSearchNavigationEvent.LocationSelected -> {
-                    navController.navigateToWeatherInfoScreen(navigationEvent.locationKey.toString())
+                    navController.navigateToWeatherDetailsScreen(navigationEvent.locationKey)
                 }
             }
-        }
+        })
 
-        )
-
-        weatherInfoNavigation()
+        weatherDetailsNavigation()
 
     }
 }

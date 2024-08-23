@@ -1,4 +1,4 @@
-package com.jakub.zajac.feature.weather.data.remote.model
+package com.jakub.zajac.common.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,4 +1,4 @@
-package com.jakub.zajac.feature.weather.presentation.weather_info
+package com.jakub.zajac.feature.weather.presentation.weather_details
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -10,22 +10,22 @@ import com.jakub.zajac.feature.weather.presentation.Route
 
 const val LOCATION_KEY = "locationKey"
 
-internal fun NavController.navigateToWeatherInfoScreen(
+internal fun NavController.navigateToWeatherDetailsScreen(
     locationKey: String
 ) {
     navigate(
-        Route.WeatherInfoRout.route.replace("{$LOCATION_KEY}", locationKey)
+        Route.WeatherDetailsRout.route.replace("{$LOCATION_KEY}", locationKey)
     )
 }
 
-internal fun NavGraphBuilder.weatherInfoNavigation(
+internal fun NavGraphBuilder.weatherDetailsNavigation(
 ) {
-    composable( Route.WeatherInfoRout.route,
+    composable( Route.WeatherDetailsRout.route,
         arguments = listOf(navArgument(LOCATION_KEY){
             type = NavType.StringType
         })
     ) {
-        val viewModel: WeatherInfoViewModel = hiltViewModel()
-        WeatherInfoScreen()
+        val viewModel: WeatherDetailsViewModel = hiltViewModel()
+        WeatherDetailsScreen()
     }
 }
