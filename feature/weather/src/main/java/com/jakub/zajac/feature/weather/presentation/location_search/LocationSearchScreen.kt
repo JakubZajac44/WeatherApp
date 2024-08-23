@@ -1,6 +1,5 @@
 package com.jakub.zajac.feature.weather.presentation.location_search
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +43,6 @@ fun LocationSearchScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Red)
     ) {
 
         Column {
