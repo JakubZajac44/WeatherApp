@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jakub.zajac.common.resource.ui.dot_progress_bar.ProgressDotIndicator
 import com.jakub.zajac.feature.weather.presentation.location_search.component.LocationItem
 
 @Composable
@@ -40,7 +42,7 @@ fun LocationSearchScreen(
     var query by rememberSaveable  { mutableStateOf("") }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Red)
     ) {
@@ -94,6 +96,12 @@ fun LocationSearchScreen(
                     keyboardType = KeyboardType.Text,
                     autoCorrect = true,
                 ),
+            )
+
+
+            ProgressDotIndicator(
+                modifier = Modifier.size(80.dp),
+                progressColor = MaterialTheme.colorScheme.primary,
             )
 
             if (state.locationList.isNotEmpty()) {
