@@ -1,6 +1,7 @@
 package com.jakub.zajac.common.network.api
 
-import com.jakub.zajac.common.network.model.WeatherDailyResponse
+import com.jakub.zajac.common.network.model.CurrentWeatherDto
+import com.jakub.zajac.common.network.model.response.WeatherDailyResponse
 import com.jakub.zajac.common.network.model.WeatherHourlyDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,4 +23,10 @@ interface WeatherApi {
         @Query("details") details: Boolean,
         @Query("metric") metric: Boolean
     ): Response<WeatherDailyResponse>
+
+    @GET("currentconditions/v1/{locationKey}/")
+    suspend fun getCurrentWeather(
+        @Path("locationKey") locationKey: String,
+        @Query("details") details: Boolean,
+    ): Response<List<CurrentWeatherDto>>
 }

@@ -2,8 +2,8 @@ package com.jakub.zajac.feature.weather.data.repository
 
 import com.jakub.zajac.common.resource.ApiResult
 import com.jakub.zajac.common.storage.model.LocationEntity
-import com.jakub.zajac.feature.weather.data.local.data_source.LocationLocalDataSource
-import com.jakub.zajac.feature.weather.data.remote.data_source.LocationRemoteDataSource
+import com.jakub.zajac.feature.weather.data.data_source.local.LocationLocalDataSource
+import com.jakub.zajac.feature.weather.data.data_source.remote.LocationRemoteDataSource
 import com.jakub.zajac.common.network.model.LocationDto
 import com.jakub.zajac.feature.weather.domain.repository.LocationRepository
 import javax.inject.Inject

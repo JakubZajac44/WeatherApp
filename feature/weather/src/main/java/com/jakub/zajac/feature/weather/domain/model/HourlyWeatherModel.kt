@@ -18,14 +18,6 @@ data class WeatherHourlyModel(
     val cloudCover: Int,
 )
 
-data class TemperatureModel(
-    val value: Float, val unit: String
-)
-
-data class TemperatureFeelValueModel(
-    val value: Float, val unit: String, val phrase: String
-)
-
 data class PrecipitationModel(
     val value: Float, val unit: String
 )

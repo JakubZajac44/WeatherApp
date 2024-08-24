@@ -1,4 +1,4 @@
-package com.jakub.zajac.feature.weather.data.remote.data_source
+package com.jakub.zajac.feature.weather.data.data_source.remote
 
 import com.jakub.zajac.common.resource.ApiResult
 import com.jakub.zajac.common.resource.apiCall

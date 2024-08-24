@@ -74,14 +74,6 @@ fun LocationSearchScreen(
         }
     }
 
-
-//    LaunchedEffect(state.errorMessage) {
-//        state.errorMessage?.let{
-//            Toast.makeText(context, state.errorMessage.asString(context), Toast.LENGTH_LONG).show()
-//        }
-//    }
-
-
     Box(
         modifier = modifier.fillMaxSize()
 

@@ -1,6 +1,7 @@
 package com.jakub.zajac.feature.weather.presentation.weather_details
 
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -26,6 +27,10 @@ internal fun NavGraphBuilder.weatherDetailsNavigation(
         })
     ) {
         val viewModel: WeatherDetailsViewModel = hiltViewModel()
-        WeatherDetailsScreen()
+        WeatherDetailsScreen(
+            state = viewModel.state.collectAsStateWithLifecycle().value,
+            sideEffect = viewModel.sideEffectFlow,
+            event = viewModel::onEvent
+        )
     }
 }
