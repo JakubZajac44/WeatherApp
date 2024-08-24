@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.jakub.zajac.feature.weather.presentation.Route
 
-
 internal fun NavGraphBuilder.locationSearchNavigation(
     navigationEvent: (LocationSearchNavigationEvent) -> Unit
 ) {
@@ -16,7 +15,8 @@ internal fun NavGraphBuilder.locationSearchNavigation(
         LocationSearchScreen(
             state = viewModel.state.collectAsStateWithLifecycle().value,
             event = viewModel::onEvent,
-            navigationEvent = navigationEvent
+            navigationEvent = navigationEvent,
+            sideEffect = viewModel.sideEffectFlow
         )
     }
 }

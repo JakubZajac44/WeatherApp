@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_location_title">Wyszukaj miasto, aby sprawdzić pogodę</string>
+    <string name="start_enter_location_name">Zacznij wpisywać nazwę miasta</string>
+    <string name="no_location_found">Brak dopasowania</string>
+    <string name="last_search_result">Ostatnio wyszukiwane</string>
+    <string name="no_historic_search">Brak historii wyszukiwań</string>
+    <string name="loading_progress_tag">loading progress</string>
+    <string name="validation_query_error_contain_number"> "Nazwa miejscowości nie może zawierać liczb"</string>
+    <string name="validation_query_error_contain_special_char"> "Nazwa miejscowości nie może zawierać zanków specjalnych"</string>
+    <string name="validation_query_error_default"> "Błędna nazwa miejscowości"</string>
+    <string name="city">Miasto</string>
+    <string name="country">Państwo</string>
+    <string name="image_city_icon_cd">city icon</string>
+
+
+</resources>
