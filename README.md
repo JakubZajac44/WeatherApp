@@ -5,17 +5,28 @@ The application was written according to the MVI pattern in Jetpack Compose, div
 Technologies used:
 
 Compose - application design
+
 Hilt - dependency injection
+
 Retrofit - communication with API
+
 Jectpack Navigation - navigation based on deeplinks
+
 Room - local database support
+
+
 Feautres:
 
 Dark and light mode
+
 MVI pattern
+
 Clean Architecture
+
 Shimmer Effect
+
 Basic Animation
+
 Caching Data
 
 
