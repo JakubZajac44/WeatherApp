@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_location_title">Wyszukaj miasto, aby sprawdzić pogodę</string>
+    <string name="start_enter_location_name">Zacznij wpisywać nazwę miasta</string>
+    <string name="no_location_found">Brak dopasowania</string>
+    <string name="last_search_result">Ostatnio wyszukiwane</string>
+    <string name="no_historic_search">Brak historii wyszukiwań</string>
+    <string name="loading_progress_tag">loading progress</string>
+    <string name="validation_query_error_contain_number"> "Nazwa miejscowości nie może zawierać liczb"</string>
+    <string name="validation_query_error_contain_special_char"> "Nazwa miejscowości nie może zawierać zanków specjalnych"</string>
+    <string name="validation_query_error_default"> "Błędna nazwa miejscowości"</string>
+    <string name="city">Miasto</string>
+    <string name="country">Państwo</string>
+    <string name="image_city_icon_cd">city icon</string>
+    <string name="cloud_cover_title">Zachmurzenie</string>
+    <string name="cloud_cover_value">%1$d \%%</string>
+    <string name="real_temperature_title">Temperatura odczuwalna</string>
+    <string name="real_temperature_value">%1$.1f %2$s</string>
+    <string name="real_temperature">Temperatura odczuwalna: %1$.1f %2$s</string>
+    <string name="weather_icon_db">content description</string>
+    <string name="humidity_title">Wilgotność</string>
+    <string name="humidity_value">%1$d \%%</string>
+    <string name="humidity">Wilgotność: %1$d \%%</string>
+    <string name="real_humidity_title">Wilgotność podczuwalana</string>
+    <string name="real_humidity_value">"%1$d \%%"</string>
+    <string name="error_loading_data">Nie udało się załadować danych</string>
+    <string name="rain_probability">- deszczu: %1$s \%%</string>
+    <string name="snow_probability">- śniegu: %1$s \%%</string>
+    <string name="ice_probability">- przymrozku: %1$s \%%</string>
+    <string name="probability_title">Możliwość:</string>
+    <string name="weather_for_next_hours">Pogoda na następne godziny</string>
+    <string name="weather_for_next_days">Pogoda na następne dni</string>
+
+
+</resources>
