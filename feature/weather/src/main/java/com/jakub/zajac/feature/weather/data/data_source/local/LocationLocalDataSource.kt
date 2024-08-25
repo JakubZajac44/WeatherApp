@@ -1,4 +1,4 @@
-package com.jakub.zajac.feature.weather.data.local.data_source
+package com.jakub.zajac.feature.weather.data.data_source.local
 
 import com.jakub.zajac.common.storage.dao.LocationDao
 import com.jakub.zajac.common.storage.model.LocationEntity

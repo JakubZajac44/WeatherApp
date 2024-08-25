@@ -9,5 +9,5 @@ sealed class LocationSearchEvent {
 }
 
 sealed class LocationSearchNavigationEvent {
-    data class LocationSelected(val locationKey: String) : LocationSearchNavigationEvent()
+    data class LocationSelected(val locationKey: String, val locationName: String) : LocationSearchNavigationEvent()
 }

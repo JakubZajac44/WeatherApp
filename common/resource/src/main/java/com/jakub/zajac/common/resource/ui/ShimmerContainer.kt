@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.IntSize
 @Composable
 fun ShimmerContainer(
     isLoading: Boolean,
-    contentAfterLoading: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     colorList: List<Color> = listOf(),
+    contentAfterLoading: @Composable () -> Unit,
 ) {
     val colorListDark = listOf(
         Color(0x41EBEBF4),
@@ -73,15 +73,16 @@ fun Modifier.shimmerEffect(
     colorList: List<Color>,
 ): Modifier = composed {
     var size by remember {
-        mutableStateOf(IntSize.Zero)
+        mutableStateOf(IntSize(1, 1))
     }
     val transition = rememberInfiniteTransition(label = "")
     val startOffSetX by transition.animateFloat(
-        initialValue = -1.5f * size.width.toFloat(),
-        targetValue = 1.5f * size.width.toFloat(),
+        initialValue = -2f * size.width.toFloat(),
+        targetValue = 2f * size.width.toFloat(),
         animationSpec = infiniteRepeatable(
             animation = tween(2 * size.width)
-        ), label = ""
+        ),
+        label = ""
     )
 
     background(
@@ -90,8 +91,7 @@ fun Modifier.shimmerEffect(
             start = Offset(startOffSetX, 0f),
             end = Offset(startOffSetX + size.width.toFloat(), size.height.toFloat())
         )
-    )
-        .onGloballyPositioned {
+    ).onGloballyPositioned {
             size = it.size
         }
 }

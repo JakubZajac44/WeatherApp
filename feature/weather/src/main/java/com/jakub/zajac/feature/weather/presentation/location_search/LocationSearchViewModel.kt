@@ -50,7 +50,6 @@ class LocationSearchViewModel @Inject constructor(
     }
 
     fun onEvent(event: LocationSearchEvent) {
-
         when (event) {
             is LocationSearchEvent.SearchQueryTyped -> {
                 handleNewSearchQuery(event.locationQuery)

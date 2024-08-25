@@ -7,14 +7,16 @@ import androidx.navigation.navigation
 import com.jakub.zajac.feature.weather.presentation.location_search.LocationSearchNavigationEvent
 import com.jakub.zajac.feature.weather.presentation.location_search.locationSearchNavigation
 import com.jakub.zajac.feature.weather.presentation.weather_details.LOCATION_KEY
+import com.jakub.zajac.feature.weather.presentation.weather_details.LOCATION_NAME
 import com.jakub.zajac.feature.weather.presentation.weather_details.navigateToWeatherDetailsScreen
 import com.jakub.zajac.feature.weather.presentation.weather_details.weatherDetailsNavigation
 
 const val WEATHER_GRAPH_ROUTE = "weather-graph"
 
-internal data class LocationKeyArg(val locationKey: String) {
+internal data class LocationSearchArg(val locationKey: String, val locationName: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        locationKey = checkNotNull(savedStateHandle[LOCATION_KEY])
+        locationKey = checkNotNull(savedStateHandle[LOCATION_KEY]),
+        locationName = checkNotNull(savedStateHandle[LOCATION_NAME]),
     )
 }
 
@@ -28,7 +30,7 @@ fun NavGraphBuilder.weatherGraph(
         locationSearchNavigation(navigationEvent = { navigationEvent ->
             when (navigationEvent) {
                 is LocationSearchNavigationEvent.LocationSelected -> {
-                    navController.navigateToWeatherDetailsScreen(navigationEvent.locationKey)
+                    navController.navigateToWeatherDetailsScreen(navigationEvent.locationKey, navigationEvent.locationName)
                 }
             }
         })
