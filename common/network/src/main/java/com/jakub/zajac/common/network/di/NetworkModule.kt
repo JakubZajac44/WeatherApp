@@ -45,7 +45,7 @@ class NetworkModule {
     private fun apiParametersAsQuery(chain: Interceptor.Chain) = chain.proceed(
         chain.request().newBuilder().url(
                 chain.request().url.newBuilder()
-                    .addQueryParameter("apikey", "bBGgWZ9gtj5RI2mGmyimMV47MSMjo0zW ")
+                    .addQueryParameter("apikey", "azhShQUY9GOhjr9xZ9HrVIKkXGqjvGNI ")
                     .addQueryParameter("language", "pl-PL")
                     .build()
             ).build()
