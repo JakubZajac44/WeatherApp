@@ -10,12 +10,14 @@ import androidx.navigation.navArgument
 import com.jakub.zajac.feature.weather.presentation.Route
 
 const val LOCATION_KEY = "locationKey"
+const val LOCATION_NAME = "locationName"
 
 internal fun NavController.navigateToWeatherDetailsScreen(
-    locationKey: String
+    locationKey: String,
+    locationName: String
 ) {
     navigate(
-        Route.WeatherDetailsRout.route.replace("{$LOCATION_KEY}", locationKey)
+        Route.WeatherDetailsRout.route.replace("{$LOCATION_KEY}", locationKey).replace("{$LOCATION_NAME}", locationName)
     )
 }
 

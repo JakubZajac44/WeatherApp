@@ -9,7 +9,7 @@ import com.jakub.zajac.common.resource.handleApiError
 import com.jakub.zajac.feature.weather.domain.use_case.GetCurrentWeatherUseCase
 import com.jakub.zajac.feature.weather.domain.use_case.GetDailyWeatherUseCase
 import com.jakub.zajac.feature.weather.domain.use_case.GetHourlyWeatherUseCase
-import com.jakub.zajac.feature.weather.presentation.LocationKeyArg
+import com.jakub.zajac.feature.weather.presentation.LocationSearchArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -39,16 +39,27 @@ class WeatherDetailsViewModel @Inject constructor(
     val sideEffectFlow: Flow<SideEffect>
         get() = _sideEffectChannel.receiveAsFlow()
 
-    private val args = LocationKeyArg(savedStateHandle)
+    private val args = LocationSearchArg(savedStateHandle)
 
 
     init {
+        _state.update {
+            it.copy(
+               locationName = args.locationName
+            )
+        }
+
         getWeatherDetails()
     }
 
     fun onEvent(event: WeatherDetailsEvent) {
         when (event) {
             WeatherDetailsEvent.RefreshWeatherData -> {
+                _state.update {
+                    it.copy(
+                        isRefreshing = true,
+                    )
+                }
                 getWeatherDetails()
             }
         }
@@ -60,8 +71,6 @@ class WeatherDetailsViewModel @Inject constructor(
         getDailyWeather(args.locationKey)
     }
 
-
-
     private fun getCurrentWeather(locationKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
             getCurrentWeatherUseCase(locationKey).collect { result ->
@@ -71,6 +80,7 @@ class WeatherDetailsViewModel @Inject constructor(
                             it.copy(
                                 currentWeather = null,
                                 isLoadingWeatherCurrent = false,
+                                isRefreshing = false
                             )
                         }
                         _sideEffectChannel.trySend(SideEffect.ShowToast(handleApiError(result.apiException)))
@@ -81,6 +91,7 @@ class WeatherDetailsViewModel @Inject constructor(
                             it.copy(
                                 currentWeather = result.data,
                                 isLoadingWeatherCurrent = false,
+                                isRefreshing = false
                             )
                         }
                     }
@@ -88,7 +99,7 @@ class WeatherDetailsViewModel @Inject constructor(
                     is Resource.Loading -> {
                         _state.update {
                             it.copy(
-                                isLoadingWeatherHourly = true,
+                                isLoadingWeatherCurrent = true,
                             )
                         }
                     }
@@ -142,7 +153,7 @@ class WeatherDetailsViewModel @Inject constructor(
                     is Resource.Error -> {
                         _state.update {
                             it.copy(
-                                weatherDailyModel = listOf(),
+                                weatherDaily = listOf(),
                                 isLoadingWeatherDaily = false,
                             )
                         }
@@ -152,7 +163,7 @@ class WeatherDetailsViewModel @Inject constructor(
                     is Resource.Success -> {
                         _state.update {
                             it.copy(
-                                weatherDailyModel = result.data,
+                                weatherDaily = result.data,
                                 isLoadingWeatherDaily = false,
                             )
                         }

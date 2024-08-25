@@ -12,6 +12,24 @@
     <string name="city">Miasto</string>
     <string name="country">Państwo</string>
     <string name="image_city_icon_cd">city icon</string>
+    <string name="cloud_cover_title">Zachmurzenie</string>
+    <string name="cloud_cover_value">%1$d \%%</string>
+    <string name="real_temperature_title">Temperatura odczuwalna</string>
+    <string name="real_temperature_value">%1$.1f %2$s</string>
+    <string name="real_temperature">Temperatura odczuwalna: %1$.1f %2$s</string>
+    <string name="weather_icon_db">content description</string>
+    <string name="humidity_title">Wilgotność</string>
+    <string name="humidity_value">%1$d \%%</string>
+    <string name="humidity">Wilgotność: %1$d \%%</string>
+    <string name="real_humidity_title">Wilgotność podczuwalana</string>
+    <string name="real_humidity_value">"%1$d \%%"</string>
+    <string name="error_loading_data">Nie udało się załadować danych</string>
+    <string name="rain_probability">- deszczu: %1$s \%%</string>
+    <string name="snow_probability">- śniegu: %1$s \%%</string>
+    <string name="ice_probability">- przymrozku: %1$s \%%</string>
+    <string name="probability_title">Możliwość:</string>
+    <string name="weather_for_next_hours">Pogoda na następne godziny</string>
+    <string name="weather_for_next_days">Pogoda na następne dni</string>
 
 
 </resources>

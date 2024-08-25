@@ -1,26 +1,25 @@
 package com.jakub.zajac.feature.weather.presentation.weather_details
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.jakub.zajac.common.resource.SideEffect
 import com.jakub.zajac.common.resource.SingleEventEffect
-import com.jakub.zajac.common.resource.getWeatherIcon
+import com.jakub.zajac.common.resource.ui.PullToRefreshComponent
+import com.jakub.zajac.feature.weather.presentation.weather_details.component.WeatherDetailsCurrentComponent
+import com.jakub.zajac.feature.weather.presentation.weather_details.component.daily.WeatherDetailsDailyComponent
+import com.jakub.zajac.feature.weather.presentation.weather_details.component.hourly.WeatherDetailsHourlyComponent
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun WeatherDetailsScreen(
-    modifier: Modifier = Modifier,
     state: WeatherDetailsState,
     sideEffect: Flow<SideEffect>,
     event: (WeatherDetailsEvent) -> Unit,
@@ -30,29 +29,44 @@ fun WeatherDetailsScreen(
     SingleEventEffect(sideEffect) { effect ->
         when (effect) {
             is SideEffect.ShowToast -> Toast.makeText(
-                context,
-                effect.message.asString(context),
-                Toast.LENGTH_SHORT
+                context, effect.message.asString(context), Toast.LENGTH_SHORT
             ).show()
         }
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(15.dp)
+    Surface(
+        modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
     ) {
-        Text("Pogoda")
 
+        Box(modifier = Modifier.fillMaxSize()) {
+            PullToRefreshComponent(
+                isRefreshing = state.isRefreshing,
+                onRefresh = {
+                    event.invoke(WeatherDetailsEvent.RefreshWeatherData)
+                },
+            ) {
 
-        Image(
-            painterResource(getWeatherIcon(24)),
-            "content description",
-            modifier = Modifier
-                .width(128.dp)
-                .height(128.dp)
-        )
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
 
+                    WeatherDetailsCurrentComponent(
+                        state.currentWeather,
+                        state.locationName,
+                        state.isLoadingWeatherCurrent
+                    )
 
+                    WeatherDetailsHourlyComponent(
+                        weatherHourly = state.weatherHourly,
+                        isLoading = state.isLoadingWeatherHourly
+                    )
+
+                    WeatherDetailsDailyComponent(
+                        weatherDaily = state.weatherDaily,
+                        isLoading = state.isLoadingWeatherDaily
+                    )
+                }
+            }
+        }
     }
 }

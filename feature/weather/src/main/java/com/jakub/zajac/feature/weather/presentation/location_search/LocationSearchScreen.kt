@@ -177,7 +177,7 @@ fun LocationSearchScreen(
 
                                     navigationEvent.invoke(
                                         LocationSearchNavigationEvent.LocationSelected(
-                                            model.key
+                                            model.key, model.name
                                         )
                                     )
                                 }
@@ -250,7 +250,7 @@ fun LocationSearchScreen(
 
                                     navigationEvent.invoke(
                                         LocationSearchNavigationEvent.LocationSelected(
-                                            model.key
+                                            model.key, model.name
                                         )
                                     )
                                 }
